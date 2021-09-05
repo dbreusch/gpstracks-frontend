@@ -31,7 +31,9 @@ const Users = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedUsers, setLoadedUsers] = useState();
 
-  const backendUrl = 'http://localhost:5000';
+  // const backendUrl = 'http://localhost:3001';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const backendPort = process.env.REACT_APP_BACKEND_PORT;
 
   // convoluted syntax below is because useEffect "does not want" a function that
   // returns a promise (i.e., async functions).  but it's ok to define an "ief"
@@ -40,14 +42,14 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const responseData = await sendRequest(`${backendUrl}/api/users`);
+        const responseData = await sendRequest(`${backendUrl}:${backendPort}`);
         setLoadedUsers(responseData.users);
       } catch (err) {
         // console.log(err.message);
       }
     };
     fetchUsers();
-  }, [sendRequest]);
+  }, [sendRequest, backendPort, backendUrl]);
 
   return (
     <React.Fragment>

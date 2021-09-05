@@ -18,7 +18,9 @@ const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  const backendUrl = 'http://localhost:5000';
+  // const backendUrl = 'http://localhost:3001';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const backendPort = process.env.REACT_APP_BACKEND_PORT;
 
   const [formState, inputHandler, setFormData] = useForm({
     name: undefined,
@@ -71,10 +73,12 @@ const Auth = () => {
   const authSubmitHandler = async event => {
     event.preventDefault();
 
+    // console.log('authSubmitHandler enter');
     if (isLoginMode) {
       try {
+        // console.log('Sending POST');
         const responseData = await sendRequest(
-          `${backendUrl}/api/users/login`,
+          `${backendUrl}:${backendPort}/login`,
           'POST',
           JSON.stringify({
             email: formState.inputs.email.value,
@@ -84,10 +88,17 @@ const Auth = () => {
             'Content-Type': 'application/json'
           },
         );
+        // console.log(`Auth.js token ${responseData.token}`);
 
+        // console.log('Calling auth.login');
         auth.login(responseData.userId, responseData.token);
       } catch (err) {
-        // console.log(err.message
+        console.log('authSubmitHandler login Error');
+        if (err.name === "NS_ERROR_FILE_CORRUPTED") {
+          console.log("Sorry, it looks like your browser storage has been corrupted. Please clear your storage by going to Tools -> Clear Recent History -> Cookies and set time range to 'Everything'. This will remove the corrupted browser storage across all sites.");
+        } else {
+          console.log(err.message);
+        }
       }
     } else {
       try {
@@ -97,14 +108,19 @@ const Auth = () => {
         formData.append('password', formState.inputs.password.value);
         // formData.append('image', formState.inputs.image.value);
         const responseData = await sendRequest(
-          `${backendUrl}/api/users/signup`,
+          `${backendUrl}:${backendPort}/register`,
           'POST',
           formData
         );
 
         auth.login(responseData.userId, responseData.token);
       } catch (err) {
-        // console.log(err.message)
+        console.log('authSubmitHandler signup Error');
+        if (err.name === "NS_ERROR_FILE_CORRUPTED") {
+          console.log("Sorry, it looks like your browser storage has been corrupted. Please clear your storage by going to Tools -> Clear Recent History -> Cookies and set time range to 'Everything'. This will remove the corrupted browser storage across all sites.");
+        } else {
+          console.log(err.message);
+        }
       }
     };
   };

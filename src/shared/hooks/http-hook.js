@@ -12,6 +12,7 @@ export const useHttpClient = () => {
         body = null,
         headers = {}
     ) => {
+        // console.log(`http-hook: ${url} ${method}`);
         setIsLoading(true);
         const httpAbortCtrl = new AbortController();
         activeHttpRequests.current.push(httpAbortCtrl);
