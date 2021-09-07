@@ -19,8 +19,8 @@ const Auth = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   // const backendUrl = 'http://localhost:3001';
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
-  const backendPort = process.env.REACT_APP_BACKEND_PORT;
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost';
+  const backendPort = process.env.REACT_APP_BACKEND_PORT || 3001;
 
   const [formState, inputHandler, setFormData] = useForm({
     name: undefined,

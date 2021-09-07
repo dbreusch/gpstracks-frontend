@@ -32,8 +32,8 @@ const Users = () => {
   const [loadedUsers, setLoadedUsers] = useState();
 
   // const backendUrl = 'http://localhost:3001';
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
-  const backendPort = process.env.REACT_APP_BACKEND_PORT;
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost';
+  const backendPort = process.env.REACT_APP_BACKEND_PORT || 3001;
 
   // convoluted syntax below is because useEffect "does not want" a function that
   // returns a promise (i.e., async functions).  but it's ok to define an "ief"
