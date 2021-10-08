@@ -12,7 +12,11 @@ export const useHttpClient = () => {
         body = null,
         headers = {}
     ) => {
-        // console.log(`http-hook: ${url} ${method}`);
+        // console.log(`http-hook: ${url} ${method} ${body}`);
+        // // show data appended to FormData object
+        // for (var pair of body.entries()) {
+        //   console.log(pair[0] + ', ' + pair[1]);
+        // }
         setIsLoading(true);
         const httpAbortCtrl = new AbortController();
         activeHttpRequests.current.push(httpAbortCtrl);

@@ -5,7 +5,7 @@ import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
-// import ImageUpload from '../../shared/components/FormElements/ImageUpload';
+import ImageUpload from '../../shared/components/FormElements/ImageUpload';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import { useHttpClient } from '../../shared/hooks/http-hook';
@@ -57,11 +57,11 @@ const Auth = () => {
           name: {
             value: prevName.current,
             isValid: false
+          },
+          image: {
+            value: null,
+            isValid: false
           }
-          // image: {
-          //   value: null,
-          //   isValid: false
-          // }
         },
         false
       );
@@ -102,20 +102,37 @@ const Auth = () => {
       }
     } else {
       try {
+        // // show form inputs
+        // console.log('Data from input form:˝');
+        // console.log(`email ${formState.inputs.email.value}`);
+        // console.log(`name ${formState.inputs.name.value}`);
+        // console.log(`password ${formState.inputs.password.value}`);
+
+        // create and add data to a FormData object
         const formData = new FormData();
         formData.append('email', formState.inputs.email.value);
         formData.append('name', formState.inputs.name.value);
         formData.append('password', formState.inputs.password.value);
-        // formData.append('image', formState.inputs.image.value);
+        formData.append('image', formState.inputs.image.value);
+
+        // // show data appended to FormData object
+        // for (var pair of formData.entries()) {
+        //   console.log(pair[0] + ', ' + pair[1]);
+        // }
+
+        // console.log(`backendURL = ${backendUrl}, backendPort = ${backendPort}`);
         const responseData = await sendRequest(
           `${backendUrl}:${backendPort}/register`,
           'POST',
           formData
         );
 
+        // console.log('responseData from users-api/register:')
+        // console.log(responseData);
+
         auth.login(responseData.userId, responseData.token);
       } catch (err) {
-        console.log('authSubmitHandler signup Error');
+        console.log('authSubmitHandler: error in user signup');
         if (err.name === "NS_ERROR_FILE_CORRUPTED") {
           console.log("Sorry, it looks like your browser storage has been corrupted. Please clear your storage by going to Tools -> Clear Recent History -> Cookies and set time range to 'Everything'. This will remove the corrupted browser storage across all sites.");
         } else {
@@ -145,13 +162,13 @@ const Auth = () => {
               onInput={inputHandler}
             />
           )}
-          {/* {!isLoginMode && (
+          {!isLoginMode && (
             <ImageUpload
               center
               id="image"
               onInput={inputHandler}
               errorText="Please provide an image." />
-          )} */}
+          )}
           <Input
             element="input"
             id="email"
