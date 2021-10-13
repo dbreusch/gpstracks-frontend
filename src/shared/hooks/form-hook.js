@@ -1,5 +1,9 @@
+// tools to manage forms
+
 import { useCallback, useReducer } from 'react';
 
+// the reducer function
+// handles 'INPUT_CHANGE' and 'SET_DATA'
 const formReducer = (state, action) => {
     switch (action.type) {
         case 'INPUT_CHANGE':
@@ -34,12 +38,17 @@ const formReducer = (state, action) => {
     }
 };
 
+// the external function for this hook
+// handles/returns form state, input handler and form definition
 export const useForm = (initialInputs, initialFormValidity) => {
+
+    // define reducer function
     const [formState, dispatch] = useReducer(formReducer, {
         inputs: initialInputs,
         isValid: initialFormValidity
     });
 
+    // callback to handle form input changes
     const inputHandler = useCallback((id, value, isValid) => {
         dispatch({
             type: 'INPUT_CHANGE',
@@ -49,6 +58,7 @@ export const useForm = (initialInputs, initialFormValidity) => {
         });
     }, []);
 
+    // callback to handle form definition
     const setFormData = useCallback((inputData, formValidity) => {
         // console.log(inputData);
         dispatch({

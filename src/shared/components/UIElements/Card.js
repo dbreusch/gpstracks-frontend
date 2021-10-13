@@ -1,3 +1,4 @@
+// container to show content in a card-like format
 import React from 'react';
 
 import './Card.css';

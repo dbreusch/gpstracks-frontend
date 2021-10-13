@@ -1,3 +1,4 @@
+// display a user's image a.k.a. avatar
 import React from 'react';
 
 import './Avatar.css';

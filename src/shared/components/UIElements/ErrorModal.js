@@ -1,3 +1,4 @@
+// display error message in a modal format
 import React from 'react';
 
 import Modal from './Modal';

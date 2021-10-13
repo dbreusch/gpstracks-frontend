@@ -1,3 +1,8 @@
+// display User information as a Card
+// - Avatar (obtained from the backend)
+// - Name
+// - Number of tracks
+// Card links to track list
 import React from 'react';
 import { Link } from 'react-router-dom';
 

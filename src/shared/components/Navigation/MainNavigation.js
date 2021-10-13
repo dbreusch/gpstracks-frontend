@@ -1,3 +1,8 @@
+// main page navigation
+// supports responsive navigation header
+// - below min-width, a navigation button is shown and a "side drawer" menu is used
+//   to hold the navigation links
+// - for wider screens, navigation links are shown in the header
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -8,6 +13,7 @@ import Backdrop from '../UIElements/Backdrop';
 import './MainNavigation.css';
 
 const MainNavigation = props => {
+    // state and event handlers for side drawer
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
     const openDrawerHandler = () => {

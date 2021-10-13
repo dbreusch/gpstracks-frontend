@@ -1,3 +1,14 @@
+// display components in a modal way, i.e., as a UI element that blocks
+// interaction with the rest of the application.  includes an opaque
+// Backdrop for visual definition.
+//
+// modal is formatted as a header and a form; the latter holds the content
+// and a footer.
+//
+// NOTE: requires the following HTML to be present in index.html so that
+// the createPortal call can find the alternate location in the DOM to
+// render this content:
+//      div id="modal-hook"></div>
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { CSSTransition } from 'react-transition-group';

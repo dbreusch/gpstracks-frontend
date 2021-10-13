@@ -1,3 +1,7 @@
+// support a variety of "button" types:
+//   anchor: href
+//   Link: route
+//   normal: onClick function
 import React from 'react';
 import { Link } from 'react-router-dom';
 

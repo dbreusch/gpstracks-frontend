@@ -1,0 +1,45 @@
+GPS Tracks : frontend
+
+Core files:
+----------
+App.js
+
+user/pages/Auth.js
+user/pages/Users.js
+
+user/components/UserItem.js
+user/components/UsersList.js
+
+shared/components/FormElements/Button.js
+shared/components/FormElements/ImageUpload.js
+shared/components/FormElements/Input.js
+shared/components/Navigation/MainHeader.js
+shared/components/Navigation/MainNavigation.js
+shared/components/Navigation/NavLinks.js
+shared/components/Navigation/SideDrawer.js *
+shared/components/UIElements/Avatar.js
+shared/components/UIElements/Backdrop.js *
+shared/components/UIElements/Card.js
+shared/components/UIElements/ErrorModal.js
+shared/components/UIElements/LoadingSpinner.js
+shared/components/UIElements/Modal.js *
+
+shared/context/auth-context.js
+
+shared/hooks/auth-hook.js
+shared/hooks/form-hook.js
+shared/hooks/http-hook.js
+
+shared/util/validators.js
+
+* These files require extra code in index.html (a new div with a specific id)
+  to support injection of a component using createPortal.
+
+=====================
+
+Ancillary files:
+---------------
+App.test.js
+index.js
+reportWebVitals.js
+setupTests.js

@@ -1,10 +1,14 @@
+// support for custom form input fields
 import React, { useReducer, useEffect } from 'react';
 
 import { validate } from '../../util/validators';
 import './Input.css';
 
+// the reducer function
+// handles 'CHANGE' and 'TOUCH'
 const inputReducer = (state, action) => {
     switch (action.type) {
+        // update element values and validate
         case 'CHANGE':
             return {
                 ...state,
@@ -12,6 +16,7 @@ const inputReducer = (state, action) => {
                 isValid: validate(action.val, action.validators)
             };
 
+        // indicate element "was touched"
         case 'TOUCH':
             return {
                 ...state,
@@ -24,6 +29,8 @@ const inputReducer = (state, action) => {
 };
 
 const Input = props => {
+
+    // define reducer function
     const [inputState, dispatch] = useReducer(inputReducer, {
         value: props.initialValue || '',
         isTouched: false,
@@ -33,10 +40,12 @@ const Input = props => {
     const { id, onInput } = props;
     const { value, isValid } = inputState;
 
+    // pass input changes to form-hook
     useEffect(() => {
         onInput(id, value, isValid);
     }, [id, value, isValid, onInput]);
 
+    // update element values and validate
     const changeHandler = event => {
         dispatch({
             type: 'CHANGE',
@@ -45,12 +54,14 @@ const Input = props => {
         });
     };
 
+    // mark element as "touched"
     const touchHandler = () => {
         dispatch({
             type: 'TOUCH'
         });
     };
 
+    // support 'input' and 'textarea' input fields
     const element = props.element === 'input' ? (
         <input
             id={props.id}

@@ -1,3 +1,7 @@
+// manage user authentication tasks
+// operates in either login or register mode with appropriate forms to
+// collect required user data
+// works with backend to login/register users
 import React, { useState, useContext, useRef } from 'react';
 
 import Card from '../../shared/components/UIElements/Card';
@@ -22,6 +26,7 @@ const Auth = () => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost';
   const backendPort = process.env.REACT_APP_BACKEND_PORT || 3001;
 
+  // define default form
   const [formState, inputHandler, setFormData] = useForm({
     name: undefined,
     email: {
@@ -34,8 +39,10 @@ const Auth = () => {
     }
   });
 
+  // save user name so that it's not lost when switching modes
   const prevName = useRef('');
 
+  // change form fields based on login/register mode
   const switchModeHandler = () => {
     // console.log('Switching mode');
     if (!isLoginMode) {     // going TO login mode
@@ -70,12 +77,14 @@ const Auth = () => {
     setIsLoginMode(prevMode => !prevMode);
   };
 
+  // manage user login or registration depending on mode
   const authSubmitHandler = async event => {
     event.preventDefault();
 
     // console.log('authSubmitHandler enter');
-    if (isLoginMode) {
+    if (isLoginMode) {  // login mode
       try {
+        // send email and password to backend login api
         // console.log('Sending POST');
         const responseData = await sendRequest(
           `${backendUrl}:${backendPort}/login`,
@@ -90,6 +99,7 @@ const Auth = () => {
         );
         // console.log(`Auth.js token ${responseData.token}`);
 
+        // login the verified user
         // console.log('Calling auth.login');
         auth.login(responseData.userId, responseData.token);
       } catch (err) {
@@ -100,7 +110,7 @@ const Auth = () => {
           console.log(err.message);
         }
       }
-    } else {
+    } else {            // register mode
       try {
         // // show form inputs
         // console.log('Data from input form:˝');
@@ -120,6 +130,7 @@ const Auth = () => {
         //   console.log(pair[0] + ', ' + pair[1]);
         // }
 
+        // send form to the backend registration api
         // console.log(`backendURL = ${backendUrl}, backendPort = ${backendPort}`);
         const responseData = await sendRequest(
           `${backendUrl}:${backendPort}/register`,
@@ -130,6 +141,7 @@ const Auth = () => {
         // console.log('responseData from users-api/register:')
         // console.log(responseData);
 
+        // login the new user
         auth.login(responseData.userId, responseData.token);
       } catch (err) {
         console.log('authSubmitHandler: error in user signup');
@@ -142,6 +154,7 @@ const Auth = () => {
     };
   };
 
+  // define input forms based on login/register mode
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />

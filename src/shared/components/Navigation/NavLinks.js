@@ -1,3 +1,4 @@
+// display navigation items (link/button) with awareness of login status
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -14,12 +15,12 @@ const NavLinks = props => {
             </li>
             {auth.isLoggedIn &&
                 <li>
-                    <NavLink to={`/${auth.userId}/places`}>MY PLACES</NavLink>
+                    <NavLink to={`/${auth.userId}/places`}>MY TRACKS</NavLink>
                 </li>
             }
             {auth.isLoggedIn &&
                 <li>
-                    <NavLink to="/places/new">ADD PLACE</NavLink>
+                    <NavLink to="/places/new">ADD TRACK</NavLink>
                 </li>
             }
             {!auth.isLoggedIn &&

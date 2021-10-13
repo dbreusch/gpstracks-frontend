@@ -1,3 +1,5 @@
+// use CSS to display a "loading spinner" while waiting for async functions to complete
+// No idea where the CSS source came from...though undoubtedly linked to Udemy...
 import React from 'react';
 
 import './LoadingSpinner.css';

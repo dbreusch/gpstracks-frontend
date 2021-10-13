@@ -1,3 +1,4 @@
+// container to hold the page header
 import React from 'react';
 
 import './MainHeader.css';

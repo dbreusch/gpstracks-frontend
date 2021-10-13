@@ -1,3 +1,5 @@
+// map a list of Users into a series of UserItem cards
+// if no users defined, just show a message
 import React from 'react';
 
 import UserItem from './UserItem';

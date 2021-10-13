@@ -1,3 +1,6 @@
+// manage the Users
+// gets list of users from the backend, passes it to UsersList
+// handles network errors with ErrorModal
 import React, { useEffect, useState } from 'react';
 
 import UsersList from '../components/UsersList';
